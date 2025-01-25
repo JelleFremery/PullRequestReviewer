@@ -1,0 +1,6 @@
+@DeepDive.SK.Presentation.API_HostAddress = http://localhost:5242
+
+GET {{DeepDive.SK.Presentation.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

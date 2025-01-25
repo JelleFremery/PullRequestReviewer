@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>1796cc18-350e-4069-b2ed-228ecd14b0af</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+    <PackageReference Include="Scalar.AspNetCore" Version="1.2.55" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DeepDive.SK.Application\DeepDive.SK.Application.csproj" />
+    <ProjectReference Include="..\DeepDive.SK.Domain\DeepDive.SK.Domain.csproj" />
+    <ProjectReference Include="..\DeepDive.SK.Infrastructure.SemanticKernel\DeepDive.SK.Infrastructure.SemanticKernel.csproj" />
+    <ProjectReference Include="..\DeepDive.SK.Infrastructure\DeepDive.SK.Infrastructure.ADO.csproj" />
+    <ProjectReference Include="..\DeepDive.SK.ServiceDefaults\DeepDive.SK.ServiceDefaults.csproj" />
+  </ItemGroup>
+
+</Project>

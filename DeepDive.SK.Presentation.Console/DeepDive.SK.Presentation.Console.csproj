@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DeepDive.SK.Application\DeepDive.SK.Application.csproj" />
+    <ProjectReference Include="..\DeepDive.SK.Domain\DeepDive.SK.Domain.csproj" />
+    <ProjectReference Include="..\DeepDive.SK.Infrastructure.SemanticKernel\DeepDive.SK.Infrastructure.SemanticKernel.csproj" />
+    <ProjectReference Include="..\DeepDive.SK.Infrastructure\DeepDive.SK.Infrastructure.ADO.csproj" />
+    <ProjectReference Include="..\DeepDive.SK.ServiceDefaults\DeepDive.SK.ServiceDefaults.csproj" />
+  </ItemGroup>
+
+</Project>
