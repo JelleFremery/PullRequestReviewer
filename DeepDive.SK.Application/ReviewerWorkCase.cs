@@ -8,8 +8,6 @@ public class ReviewerWorkCase(
     IFileReviewService fileReviewService,
     IPullRequestCommenter pullRequestCommenter) : IReviewerUseCase
 {
-    private readonly bool ActuallyPost = false;
-
     public async Task<List<RepositoryEntity>> SearchRepositories(string? searchTerm)
     {
         var allRepositories = await pullRequestRepository.GetRepositories();
@@ -18,6 +16,11 @@ public class ReviewerWorkCase(
             return allRepositories;
         }
         return allRepositories.Where(r => r.Name.Contains(searchTerm)).ToList();
+    }
+
+    public async Task<List<PullRequestEntity>> GetPullRequests(Guid repositoryId)
+    {
+        return await pullRequestRepository.GetPullRequests(repositoryId);
     }
 
     public async Task ReviewPullRequestAsync(Guid repositoryId, int pullRequestId)
@@ -37,7 +40,7 @@ public class ReviewerWorkCase(
             var reviewComments = await fileReviewService.ReviewFileAsync(content);
 
             // Post comments to Azure DevOps
-            while (ActuallyPost)
+            if (FeatureFlags.ActuallyPostReview)
             {
                 await pullRequestCommenter.PostReviewCommentsAsync(repositoryId, pullRequestId, filePath, [reviewComments]);
             }

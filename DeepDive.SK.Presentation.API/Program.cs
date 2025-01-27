@@ -47,8 +47,16 @@ app.MapGet("/repositories",
     })
     .WithName("GetRepositories");
 
-app.MapPost("/pr",
-    async ([FromServices] IReviewerUseCase prService, [FromBody] Guid repositoryId, int pullRequestId) =>
+app.MapGet("/{repositoryId}/prs",
+    async ([FromServices] IReviewerUseCase useCase, [FromRoute] string repositoryId) =>
+    {
+        return await useCase.GetPullRequests(Guid.Parse(repositoryId));
+    })
+    .WithName("GetPullRequests");
+
+
+app.MapPost("/{repositoryId}/{pullRequestId}/review",
+    async ([FromServices] IReviewerUseCase prService, [FromRoute] Guid repositoryId, [FromRoute] int pullRequestId) =>
     {
         await prService.ReviewPullRequestAsync(repositoryId, pullRequestId);
     })

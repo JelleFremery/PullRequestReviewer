@@ -12,6 +12,8 @@ public static class DependencyConfiguration
 {
     public static IServiceCollection ConfigureInfrastructureDependencies(this IServiceCollection services)
     {
+        services.AddTransient<IFileReviewService, FileReviewService>();
+
         var pluginTypes = Scanner();
 
         var pluginInterfaces = new List<Type>();
