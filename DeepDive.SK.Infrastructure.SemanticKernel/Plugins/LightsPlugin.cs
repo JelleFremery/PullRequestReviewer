@@ -4,7 +4,7 @@ using Microsoft.SemanticKernel;
 
 namespace DeepDive.SK.Infrastructure.SemanticKernel.Plugins;
 
-public class LightsPlugin : IKernelPlugin
+public class LightsPlugin : ILightsPlugin
 {
     // Mock data for the lights
     private readonly List<LightModel> lights =

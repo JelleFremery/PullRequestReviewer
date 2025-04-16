@@ -13,11 +13,10 @@ public static class DependencyConfiguration
     public static IServiceCollection ConfigureInfrastructureDependencies(this IServiceCollection services)
     {
         services.AddTransient<IFileReviewService, FileReviewService>();
+        services.AddScoped<IKernelChatService, KernelChatService>();
 
         var pluginTypes = Scanner();
-
         var pluginInterfaces = new List<Type>();
-
         pluginTypes.ForEach(type =>
         {
             var serviceType = type.GetInterfaces()
@@ -28,32 +27,15 @@ public static class DependencyConfiguration
             pluginInterfaces.Add(serviceType);
             services.AddSingleton(serviceType, type);
         });
+        services.AddTransient<IKernelFactory, KernelFactory>();
         services.AddTransient<Kernel>(serviceProvider =>
         {
-            var kernelBuilder = Kernel.CreateBuilder();
-            kernelBuilder.Services.AddLogging(l => l
-                .SetMinimumLevel(LogLevel.Information)
-                .AddConsole()
-            );
+            var kernelBuilder = Kernel.CreateBuilder().ConfigureBuilder();
 
             pluginInterfaces.ForEach(type =>
             {
                 kernelBuilder.Plugins.AddFromObject(serviceProvider.GetRequiredService(type));
             });
-
-            // Let's add the built-in, experimental web search plugin for fun!            
-#pragma warning disable SKEXP0050
-            var textSearch = new BingTextSearch(apiKey: InfraConfig.BingKey);
-
-            // Build a text search plugin with Bing search and add to the kernel
-            var searchPlugin = textSearch.CreateWithSearch("SearchPlugin");
-            kernelBuilder.Plugins.Add(searchPlugin);
-#pragma warning restore SKEXP0050
-
-            kernelBuilder.AddAzureOpenAIChatCompletion(
-                deploymentName: InfraConfig.DeploymentName,
-                endpoint: InfraConfig.ApiEndpoint,
-                apiKey: InfraConfig.ApiKey);
 
             var kernel = kernelBuilder.Build();
             return kernel;

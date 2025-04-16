@@ -5,11 +5,11 @@ using Microsoft.SemanticKernel.ChatCompletion;
 
 namespace DeepDive.SK.Infrastructure.SemanticKernel;
 
-public class FileReviewService(Kernel kernel) : IFileReviewService
+public class FileReviewService(IKernelFactory kernelFactory) : IFileReviewService
 {
     public async Task<string> ReviewFileAsync(string fileContent)
     {
-        var chatService = kernel.GetRequiredService<IChatCompletionService>();
+        var chatService = kernelFactory.GetKernelWithoutPlugins().GetRequiredService<IChatCompletionService>();
         ChatHistory chatMessages = new(systemMessage: """
             You are a friendly assistant who is a senior developer. 
             You will review code from the user.            
